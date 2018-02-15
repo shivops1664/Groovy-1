@@ -1,0 +1,21 @@
+---
+ - name: Test
+   hosts: 127.0.0.1
+   connection: local
+   gather_facts: no
+
+   tasks:
+    - shell: docker --version
+
+    - name: docker network
+      docker_network:
+         name: test
+
+    - name: pull an image
+      docker_image:
+        name: pacur/centos-7
+
+    - name: Create a data container
+      docker_container:
+        name: Tomcat
+        image: tomcat

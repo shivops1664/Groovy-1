@@ -1,0 +1,47 @@
+---
+
+
+- hosts: web
+
+
+
+  become: yes
+
+  become_user: root
+
+
+
+
+  tasks:
+
+    - name: docker network
+
+      docker_network:
+
+        name: foobar
+
+
+
+    - name: tomcat container
+
+      docker_container:
+
+        image: tomcat
+
+        state: started
+
+        restart_policy: always
+
+        restart_policy_retry: 3
+
+        networks:
+
+          - foobar
+
+        ports:
+
+          - 0.0.0.0:80:80
+
+      tags:
+
+        - deploy
